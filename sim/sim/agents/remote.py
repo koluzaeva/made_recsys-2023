@@ -1,8 +1,9 @@
 import requests
+
 from typing import Dict
 
 from .recommender import Recommender
-from ..envs import RemoteRecommenderConfig
+from sim.envs import RemoteRecommenderConfig
 
 from urllib.parse import urlunsplit, urlencode
 

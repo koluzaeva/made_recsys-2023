@@ -10,5 +10,4 @@ COPY botify ./botify
 COPY data ./data
 
 RUN mkdir -p ./log
-
 ENV PYTHONPATH "${PYTHONPATH}:/app"

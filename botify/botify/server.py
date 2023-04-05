@@ -12,8 +12,11 @@ from gevent.pywsgi import WSGIServer
 from botify.data import DataLogger, Datum
 from botify.experiment import Experiments, Treatment
 from botify.recommenders.indexed import Indexed
+from botify.recommenders.contextual import Contextual
+from botify.recommenders.my_rec import My_recommend
 from botify.recommenders.random import Random
 from botify.track import Catalog
+from botify.recommenders.sticky_artist import StickyArtist
 
 import numpy as np
 
@@ -65,12 +68,15 @@ class NextTrack(Resource):
 
         args = parser.parse_args()
 
-        # treatment = Experiments.AA.assign(user)
-        if np.random.random() < 0.9:
-            recommender = Indexed(tracks_redis, recommendations_redis, catalog)
-        else:
-            recommender = Random(tracks_redis.connection)
+        #treatment = Experiments.MY_RECOMMENDER.assign(user)
+        #if treatment == treatment.T1:
+        #    recommender = My_recommend(tracks_redis.connection, artists_redis.connection, catalog)#Indexed(tracks_redis, recommendations_redis, catalog)
+        #else:
+        #    recommender = Random(tracks_redis.connection)
 
+        #recommender = Contextual(tracks_redis.connection, catalog)
+        #recommender = My_recommend(tracks_redis.connection, recommendations_redis.connection, catalog)
+        recommender = Random(tracks_redis.connection)
         recommendation = recommender.recommend_next(user, args.track, args.time)
 
         data_logger.log(
@@ -111,5 +117,6 @@ api.add_resource(LastTrack, "/last/<int:user>")
 
 
 if __name__ == "__main__":
+    #app.run(host="0.0.0.0", port=5000)
     http_server = WSGIServer(("", 5000), app)
     http_server.serve_forever()
