@@ -74,9 +74,8 @@ class NextTrack(Resource):
         #else:
         #    recommender = Random(tracks_redis.connection)
 
-        #recommender = Contextual(tracks_redis.connection, catalog)
-        #recommender = My_recommend(tracks_redis.connection, recommendations_redis.connection, catalog)
-        recommender = Random(tracks_redis.connection)
+        recommender = Contextual(tracks_redis.connection, catalog)
+        #recommender = Random(tracks_redis.connection)
         recommendation = recommender.recommend_next(user, args.track, args.time)
 
         data_logger.log(
