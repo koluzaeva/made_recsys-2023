@@ -10,7 +10,7 @@
 
 $$rate = F(start, track, user),$$
 
-$$F(start, track, user) = (start\_ embedding + user\_ embedding) * track\_ embedding$$
+$$F(start, track, user) = (start embedding + user embedding) * track embedding$$
 
 **Другие изменения**:
 
